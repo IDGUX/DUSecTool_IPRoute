@@ -1,0 +1,85 @@
+﻿<Window x:Class="DUSecTool_IPRoute.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:DUSecTool_IPRoute"
+        Title="DUSecTool/IPRoute"
+        Height="400" Width="400"
+        MinWidth="300" MinHeight="300"
+        SizeToContent="WidthAndHeight">
+
+    <Window.Resources>
+        <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+ 
+        <Grid Grid.Row="0">
+            <TextBox Name="txtZielAdresse" 
+                     VerticalAlignment="Center" 
+                     HorizontalAlignment="Stretch" 
+                     Margin="0,0,0,10" 
+                     Height="30"
+                     AutomationProperties.Name="Zieladresse Eingabe"
+                     AutomationProperties.HelpText="Geben Sie hier die IP-Adresse oder den Hostnamen für die Traceroute ein."
+                     />
+
+
+            <TextBlock Text="Zieladresse eingeben"
+                       Foreground="Gray"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       Margin="5,0,0,0"
+                       IsHitTestVisible="False"
+                       Visibility="{Binding Text, ElementName=txtZielAdresse, Converter={StaticResource StringToVisibilityConverter}}" />
+        </Grid>
+
+
+        <Button Name="btnTrace" 
+                Content="DUSec starten" 
+                Width="150" 
+                Grid.Row="1" 
+                Margin="0,10,0,10" 
+                Click="btnTrace_Click" 
+                AutomationProperties.Name="DUSec starten"
+                AutomationProperties.HelpText="Klicken Sie hier, um die DUSec Diagnose zu starten."
+                KeyboardNavigation.IsTabStop="True" />
+
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <StackPanel Name="ResultPanel" 
+                        AutomationProperties.Name="Ergebnisse"
+                        AutomationProperties.HelpText="Hier werden die Traceroute-Ergebnisse angezeigt." />
+        </ScrollViewer>
+
+
+        <TextBlock Name="LoadingIndicator" 
+                   Text="Bitte warten..." 
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center" 
+                   FontSize="16" 
+                   FontWeight="Bold" 
+                   Foreground="Gray" 
+                   Visibility="Collapsed"
+                   AutomationProperties.Name="Ladeanzeige"
+                   AutomationProperties.HelpText="Die Traceroute ist im Gange. Bitte warten." />
+
+
+        <TextBlock Grid.Row="3" HorizontalAlignment="Center" FontSize="10" Opacity="0.6" TextAlignment="Center">
+            Entwickelt von Dejvid Udric | 
+            <Hyperlink NavigateUri="http://udric.at" 
+                       RequestNavigate="Hyperlink_RequestNavigate"
+                       AutomationProperties.Name="Besuchen Sie udric.at"
+                       AutomationProperties.HelpText="Öffnet die Webseite udric.at">udric.at</Hyperlink> | 
+            <Hyperlink NavigateUri="http://datadus.at" 
+                       RequestNavigate="Hyperlink_RequestNavigate"
+                       AutomationProperties.Name="Besuchen Sie datadus.at"
+                       AutomationProperties.HelpText="Öffnet die Webseite datadus.at">datadus.at</Hyperlink>
+        </TextBlock>
+    </Grid>
+</Window>
